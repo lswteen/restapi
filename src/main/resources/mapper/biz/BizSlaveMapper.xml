@@ -1,0 +1,66 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wemakeprice.unusedticket.restapi.biz.mapper.BizSlaveMapper">
+
+    <select id="getTicketsCountFromCompany" parameterType="java.lang.String" resultType="java.lang.Long">
+        SELECT COUNT(*) AS COUNT
+          FROM (
+            SELECT
+              a.deal_id
+              -- a.deal_id
+              -- , a.company_id
+              --   , b.order_id
+              --  , c.coupon_id
+              --  , c.coupon_code
+            FROM deal_info AS a
+              INNER JOIN order_info AS b
+                      ON a.deal_id = b.deal_id
+                      AND b.order_status = 1
+              INNER JOIN coupon_info AS c
+                      ON b.deal_id = c.deal_id
+                      AND b.order_id = c.order_id
+                      AND c.coupon_status = 0
+              INNER JOIN company_info AS d
+                      ON a.company_id = d.company_id
+            WHERE
+                a.deal_group_id IN ('100000000', '300000000','400000000','500000000')
+                AND a.event_flag IN ('0', '4')
+                AND a.deal_status IN (0, 1, 13, 14, 15, 30, 31, 32, 99)
+                AND date_format(from_unixtime(a.valid_end_time),'%Y-%m-%d') > '2010-10-30'
+                AND a.company_id = #{value}
+            GROUP BY a.deal_id
+            ORDER by a.valid_end_time DESC
+        ) AS COUNT;
+    </select>
+
+    <select id="getTicketsFromCompany"
+            parameterType="com.wemakeprice.unusedticket.restapi.biz.dto.BizRequest"
+            resultType="com.wemakeprice.unusedticket.restapi.biz.dto.BizResponse">
+
+        SELECT
+          a.deal_id AS dealId,
+          b.deal_name AS dealName,
+          date_format(from_unixtime(a.valid_end_time), '%Y-%m-%d') AS validEndTime
+          FROM deal_info AS a
+            INNER JOIN order_info AS b
+                    ON a.deal_id = b.deal_id
+                    AND b.order_status = 1
+            INNER JOIN coupon_info AS c
+                    ON b.deal_id = c.deal_id
+                    AND b.order_id = c.order_id
+                    AND c.coupon_status = 0
+            INNER JOIN company_info AS d
+                    ON a.company_id = d.company_id
+
+        WHERE
+          a.deal_group_id IN ('100000000', '300000000','400000000','500000000')
+          AND a.event_flag IN ('0', '4')
+          AND a.deal_status IN (0, 1, 13, 14, 15, 30, 31, 32, 99)
+          AND date_format(from_unixtime(a.valid_end_time),'%Y-%m-%d') > '2010-10-30'
+          AND a.company_id = #{companyId}
+        GROUP BY a.deal_id
+        LIMIT #{listCount}
+    </select>
+</mapper>
+

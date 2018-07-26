@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wemakeprice.unusedticket.restapi.admin.mapper.AdminSlaveMapper">
+    <select id="getReceiveInfoFromDeal" parameterType="java.lang.Long" resultType="com.wemakeprice.unusedticket.restapi.admin.dto.AdminResponse">
+        SELECT
+          company_contact_manager AS companyContractManager,
+          company_cs_manager AS companyCsManager,
+          company_stock_manager AS companyStocktManager
+          FROM ticket_unused_alarm
+         WHERE deal_id = #{value}
+    </select>
+</mapper>
+

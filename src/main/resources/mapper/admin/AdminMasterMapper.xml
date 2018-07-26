@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wemakeprice.unusedticket.restapi.admin.mapper.AdminMasterMapper">
+    <insert id="insertReceiveInfoFromDeal" parameterType="com.wemakeprice.unusedticket.restapi.admin.dto.AdminRequest">
+        INSERT INTO ticket_unused_alarm
+          (deal_id, company_contact_manager, company_cs_manager, company_stock_manager, reg_date, upd_date)
+        VALUES
+          (#{dealId}, #{companyContactManager}, #{companyCsManager}, #{companyStockManager}, NOW(), NOW())
+    </insert>
+
+
+    <insert id="updateReceiveInfoFromDeal" parameterType="com.wemakeprice.unusedticket.restapi.admin.dto.AdminRequest">
+        INSERT INTO ticket_unused_alarm
+          (deal_id, company_contact_manager, company_cs_manager, company_stock_manager, reg_date, upd_date)
+        VALUES
+          (#{dealId}, #{companyContactManager}, #{companyCsManager}, #{companyStockManager}, NOW(), NOW())
+            ON DUPLICATE KEY
+            UPDATE
+              company_contact_manager = #{companyContactManager},
+              company_cs_manager = #{companyCsManager},
+              company_stock_manager = #{companyStockManager},
+              reg_date = NOW(),
+              upd_date = NOW()
+    </insert>
+</mapper>
+

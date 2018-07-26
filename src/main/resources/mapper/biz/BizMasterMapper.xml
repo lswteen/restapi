@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wemakeprice.unusedticket.restapi.bizResponse.mapper.BizMasterMapper">
+    <insert id="addDealsFromCompany" parameterType="java.util.List">
+        INSERT INTO ticket_unused_alarm
+        (
+          deal_id,
+          company_contact_manager,
+          company_cs_manager,
+          company_stock_manager,
+          reg_date,
+          upd_date
+        )
+        values
+        <foreach collection="list" item="item" separator=" , ">
+            ( #{item.dealId},
+              1,
+              0,
+              0,
+              NOW(),
+              NOW()
+            )
+        </foreach>
+    </insert>
+</mapper>
+

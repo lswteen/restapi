@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  profiles: local
+
+  master:
+    datasource:
+      url: jdbc:mysql://10.102.1.6/namu_db
+      driver-class-name: com.mysql.jdbc.Driver
+      username: web_dev
+      password: skan1234
+
+  slave:
+    datasource:
+      url: jdbc:mysql://10.102.1.6/namu_db
+      driver-class-name: com.mysql.jdbc.Driver
+      username: web_dev
+      password: skan1234
+---
