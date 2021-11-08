@@ -8,15 +8,15 @@ spring:
 
   master:
     datasource:
-      url: jdbc:mysql://10.102.1.6/namu_db
+      url: jdbc:mysql://127.0.0.1/namu_db
       driver-class-name: com.mysql.jdbc.Driver
       username: web_dev
-      password: skan1234
+      password: 1234
 
   slave:
     datasource:
-      url: jdbc:mysql://10.102.1.6/namu_db
+      url: jdbc:mysql://127.0.0.1/namu_db
       driver-class-name: com.mysql.jdbc.Driver
       username: web_dev
-      password: skan1234
+      password: 1234
 ---
